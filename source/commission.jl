@@ -1,18 +1,18 @@
 #=
 commission:
-- Julia version: 1.5.0
+- Julia version: 1.5.1
 - Author: Byron Stuike
 - Date: 2020-08-03
 =#
 
 function calcTopSeller(emp)
-    earned::Float32 = emp.yearlySales / emp.numWeeks
-    return earned
+	earned::Float32 = emp.yearlySales / emp.numWeeks
+	return earned
 end
 
 function weeklyCommissionSalary(emp)
-    wage::Float32 = emp.baseSalary + (emp.weeklySales * (emp.comRate / 100))
-    return wage
+	wage::Float32 = emp.baseSalary + (emp.weeklySales * (emp.comRate / 100))
+	return wage
 end
 
 #=
