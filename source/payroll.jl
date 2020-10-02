@@ -1,6 +1,6 @@
 #=
 payroll:
-- Julia version: 1.5.0
+- Julia version: 1.5.2
 - Author: Byron Stuike
 - Date: 2020-08-03
 =#
@@ -24,6 +24,12 @@ exists() = println("\nThat employee number already exists - Returning to the mai
 
 notFound() = println("\nThat employee number does not exist - Returning to the main menu")
 
+function getEmployeeNumber()
+	println("\nPlease enter a 9-Digit employee number: e.g. 111-111-111")
+	id::String = readline()
+	return id
+end
+
 function validateEmployee(number::String)
     e = Employee("", number, "", "")
     global index = 1
@@ -46,8 +52,9 @@ function weeklyPay(number::String)
     found = validateEmployee(number)
 
     if found
-        println("\nWeekly Pay Report:")
-        print(person)
+		  println("\nWeekly Pay Report:")
+		  income = calcWeeklyPay(person.hoursWorked, person.payRate)
+        print(income)
     else
         notFound()
     end
@@ -167,7 +174,7 @@ function loadFile(fileName)
 	global roster = readdlm(REPLPATH * fileName * ".txt", ' ')
 	row::Int = 1
 
-	while row < 9
+	while row < 10
 		name = roster[row, 1]
 		id = roster[row, 2]
 		department = roster[row, 3]
@@ -225,12 +232,6 @@ function topSellers()
 	if !found
 		println("No Employees have qualified")
 	end
-end
-
-function getEmployeeNumber()
-	println("\nPlease enter a 9-Digit employee number: e.g. 111-111-111")
-	id::String = readline()
-	return id
 end
 
 #=
