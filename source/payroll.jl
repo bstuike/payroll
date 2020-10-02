@@ -16,7 +16,7 @@ const MINWEEKS, MAXWEEKS = 0, 52;
 const MINWAGE, MINBASE, MAXRATE, MAXHOURS = 15.00, 400.00, 20.00, 70.00;
 const ZEROFLOAT, MINSALARY, MAXSALARY, LIMIT = 0.00, 24000.00, 480000.00, 9999999.99;
 const S, H, C, L = "Salaried", "Hourly", "Commissioned", "Line";
-const REPLPATH = "D:/bstui/Documents/Code/Julia/Payroll/";
+const REPLPATH = "D:/bstui/Documents/Code/GitHub/Payroll/";
 
 canCreate(line::Int, type::String) = println("Line " * line * ": is a valid transaction. " * type * " employee " * fname * " was added")
 
@@ -31,33 +31,41 @@ function getEmployeeNumber()
 end
 
 function validateEmployee(number::String)
-    e = Employee("", number, "", "")
-    global index = 1
-    found = false
+	e = Employee("", number, "", "")
+	global index = 1
+	found = false
 
-    for emp in staff
-        if isequal(e.id, emp.employee.id)
-            found = true
-            global person = getindex(staff, index)
-        end
-        index += 1
-    end
-    return found
+	for emp in staff
+		if isequal(e.id, emp.employee.id)
+			found = true
+			global person = getindex(staff, index)
+		end
+		index += 1
+	end
+	return found
 end
 
 function report()
+	println("\nPlease enter the name of the file used to save Employee data:")
+	report::String = REPLPATH * readline() * ".txt"
+	open(report, "w") do io
+		writedlm(io, roster)
+	  end
+	writedlm(report, roster, ' ')
+	println("\nThe employee database has been updated as follows:")
+	print(roster)
 end
 
 function weeklyPay(number::String)
-    found = validateEmployee(number)
+	found = validateEmployee(number)
 
-    if found
-		  println("\nWeekly Pay Report:")
-		  income = calcWeeklyPay(person.hoursWorked, person.payRate)
-        print(income)
-    else
-        notFound()
-    end
+	if found
+		println("\nWeekly Pay Report:")
+		income = calcWeeklyPay(person.hoursWorked, person.payRate)
+		print(income)
+	else
+		notFound()
+	end
 end
 
 function salaryReport()
@@ -157,10 +165,11 @@ function findFile()
 			tries += 1
 
 			if strikes - tries > 1
-					println("You have ", strikes - tries, " attempts left")
-			elseif(strikes - tries == 1)
-					println("You have ", strikes - tries, " attempt left")
-			else println("Maximum attempts reached")
+				println("You have ", strikes - tries, " attempts left")
+			elseif strikes - tries == 1
+				println("You have ", strikes - tries, " attempt left")
+			else
+				println("Maximum attempts reached")
 			end
 
 			if isa(err, LoadError)
