@@ -40,12 +40,12 @@ end
 
 abstract type AbstractWage end
 
-mutable struct Wage <: AbstractWage
-   wage::Float64
-end
+# mutable struct Wage <: AbstractWage
+#    wage::Float64
+# end
 
 function calcWeeklyPay(hoursWorked::Float64, payRate::Float64)
-	wage::Wage = 0.0
+	wage = 0.0
 	RegHours::Float64 = 40.0
 	otRate::Float64 = 1.5
 	ot::Float64 = 0.0
