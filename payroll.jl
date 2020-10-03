@@ -52,8 +52,7 @@ function report()
 		writedlm(io, roster)
 	  end
 	writedlm(report, roster, ' ')
-	println("\nThe employee database has been updated as follows:")
-	print(roster)
+	println("\nThe employee database has been updated")
 end
 
 function weeklyPay(number::String)
@@ -180,7 +179,7 @@ function findFile()
 end
 
 function loadFile(fileName)
-	global roster = readdlm(REPLPATH * fileName * ".txt", ' ')
+	global roster = readdlm(REPLPATH * fileName * ".txt")
 	row::Int = 1
 
 	while row < 10

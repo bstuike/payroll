@@ -5,6 +5,9 @@ main:
 - Date: 2020-08-03
 =#
 
+# To run the program in Julia REPL:
+# include("D:/bstui/Documents/Code/GitHub/Payroll/source/main.jl")
+
 include("payroll.jl")
 
 println("\nWelcome to the Payroll Processing System")
