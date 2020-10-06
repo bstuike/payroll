@@ -46,12 +46,11 @@ function validateEmployee(number::String)
 end
 
 function report()
-	println("\nPlease enter the name of the file used to save Employee data:")
+	println("\nPlease enter the name of the file used to save Employee data")
 	report::String = REPLPATH * readline() * ".txt"
 	open(report, "w") do io
 		writedlm(io, roster)
-	  end
-	writedlm(report, roster, ' ')
+	end
 	println("\nThe employee database has been updated")
 end
 
@@ -154,7 +153,6 @@ function findFile()
 		println("\nPlease enter the name of the Employee data file")
 		println("Do not add a file extension (e.g. .txt)")
 		fileName::String = readline()
-
 		try
 			open(REPLPATH * fileName * ".txt", "r")
 			found = true
@@ -162,7 +160,6 @@ function findFile()
 		catch err
 			println("The file " * fileName * " does not exist")
 			tries += 1
-
 			if strikes - tries > 1
 				println("You have ", strikes - tries, " attempts left")
 			elseif strikes - tries == 1
@@ -170,7 +167,6 @@ function findFile()
 			else
 				println("Maximum attempts reached")
 			end
-
 			if isa(err, LoadError)
 			end
 		end
@@ -178,15 +174,16 @@ function findFile()
 	return found
 end
 
-function loadFile(fileName)
+function loadFile(fileName::String)
+	rowCount::Int = countlines(REPLPATH * fileName * ".txt")
 	global roster = readdlm(REPLPATH * fileName * ".txt")
 	row::Int = 1
 
-	while row < 10
-		name = roster[row, 1]
-		id = roster[row, 2]
-		department = roster[row, 3]
-		group = roster[row, 4]
+	while row < rowCount
+		name::String = roster[row, 1]
+		id::String = roster[row, 2]
+		department::String = roster[row, 3]
+		group::String = roster[row, 4]
 
 		if group == "S"
 			pushSalaryEmployee(row, name, id, department, group)
